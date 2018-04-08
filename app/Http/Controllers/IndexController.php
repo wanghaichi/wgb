@@ -23,6 +23,8 @@ class IndexController extends Controller{
             'Chinese'   => $contentsC,
             'English'   => $contentsE
         ];
+        $play['startTime'] = strtotime($play['startTime']);
+        $play['endTime'] = strtotime($play['endTime']);
         return response()->json([
             'status'    => 1,
             'data'      => [
