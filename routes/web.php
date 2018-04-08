@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('st', 'STController@login');
+Route::get('st', 'STController@loginPage');
 
 Route::get('/test', function(){
     \App\User::create([
@@ -22,3 +21,4 @@ Route::get('/test', function(){
         'password' => bcrypt('123')
     ]);
 });
+
