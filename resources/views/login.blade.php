@@ -33,10 +33,13 @@
         <form name="loginForm" method="post" action="{{ url('st') }}">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group {{ session('error') ? "has-error" : "" }}">
+                <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
-                    <input type="text" name="password" class="form-control" id="password" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
                     <span class="help-block">{{ session('error') }}</span>
                 </div>
             </div>
