@@ -36,6 +36,7 @@
                 <div class="form-group {{ session('error') ? "has-error" : "" }}">
                     <label for="username">Username</label>
                     <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+                    <input type="text" name="password" class="form-control" id="password" placeholder="Enter password">
                     <span class="help-block">{{ session('error') }}</span>
                 </div>
             </div>

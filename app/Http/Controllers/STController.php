@@ -16,14 +16,14 @@ class STController extends Controller{
     }
 
     public function login(Request $request){
-        $data = $request->only(['username']);
-        if(count($data) != 1 || mb_strlen($data['username'] < 1)){
-            return back()->withInput()->with('error', '请输入用户名');
+        $data = $request->only(['username', 'password']);
+        if(count($data) != 2 || mb_strlen($data['username'] < 1)){
+            return back()->withInput()->with('error', '用户名或密码错误，请重试');
         }
         $username = $data['username'];
         $user = STUser::where('username', $username)->first();
-        if(!$user){
-            return back()->withInput()->with('error', '用户名不存在，请重试');
+        if(!$user || $user->password != $data['password']){
+            return back()->withInput()->with('error', '用户名或密码错误，请重试');
         }
         return view('info', ['data' => $user]);
     }
