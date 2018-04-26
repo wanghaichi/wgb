@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +26,23 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['spec_id', 'password', 'phoneNum', 'seatNum']);
+        if(! isset($credentials['spec_id']))
+            return response()->json(['error' => '场次缺失'], 401);
+        if(! isset($credentials['password']))
+            return response()->json(['error' => '密码缺失'], 401);
+        if(! isset($credentials['phoneNum']))
+            return response()->json(['error' => '手机号确实'], 401);
+        if(! isset($credentials['seatNum']))
+            return response()->json(['error' => '座位缺失'], 401);
 
+        $user = User::where('spec_id', $credentials['spec_id'])->first();
+        if(!$user)
+            return response()->json(['error' => '场次不存在'], 401);
+        if($user->phoneNum != $credentials['phoneNum'])
+            return response()->json(['error' => '手机号码错误'], 401);
+        if($user->seatNum != $credentials['seatNum'])
+            return response()->json(['error' => '座位号错误'], 401);
+        
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
